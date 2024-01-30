@@ -37,7 +37,7 @@ def main():
     R = data[2]
     time = data[3]
 
-    labels = ['Suceptible', 'Infected', 'Recovered']
+    labels = ['S - Brenna', 'I - Brenna', 'R - Brenna']
     colors = ['blue', 'red', 'black']
     
     fig, ax = plt.subplots()
