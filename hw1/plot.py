@@ -40,17 +40,17 @@ def main():
     labels = ['Suceptible', 'Infected', 'Recovered']
     colors = ['blue', 'red', 'black']
     
-    plt.figure(figsize=(10,6))
-    
+    fig, ax = plt.subplots(figsize=(10,6))
     for i in range(3):
-        plt.plot(time, data[i], label=labels[i], color=colors[i])
+        ax.plot(time, data[i], label=labels[i], color=colors[i])
         
-    plt.title('SIR Model Simulation')
-    plt.xlabel('Time')
-    plt.ylabel('People')
-    plt.legenn()
-    plt.grid(True)
-    plt.show
+    ax.set_title('SIR Model Simulation')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('People')
+    ax.legend()
+    ax.grid(True)
+    
+    plt.savefig(args.output_file)
     
 
 if __name__ == '__main__':
