@@ -40,7 +40,7 @@ def main():
     labels = ['Suceptible', 'Infected', 'Recovered']
     colors = ['blue', 'red', 'black']
     
-    fig, ax = plt.subplots(figsize=(10,6))
+    fig, ax = plt.subplots()
     for i in range(3):
         ax.plot(time, data[i], label=labels[i], color=colors[i])
         
@@ -48,8 +48,9 @@ def main():
     ax.set_xlabel('Time')
     ax.set_ylabel('People')
     ax.legend()
-    ax.grid(True)
-    
+    plt.tight_layout()
+
+
     plt.savefig(args.output_file)
     
 
