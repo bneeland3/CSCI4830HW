@@ -47,6 +47,7 @@ def main():
     ax.set_title('SIR Model Simulation')
     ax.set_xlabel('Time')
     ax.set_ylabel('People')
+    ax.set_xlim(left=0)
     ax.legend()
     plt.tight_layout()
 
