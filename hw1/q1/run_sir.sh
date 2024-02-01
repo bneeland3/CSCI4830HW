@@ -22,3 +22,9 @@ python plot.py \
     --gamma 0.5 \
     --output_file 'beta2plot.png' \
     
+echo '...running plot.py when beta = 2 and gamma = 0.5...'
+python plot.py \
+    --beta 2.0 \
+    --gamma 0.5 \
+    --output_file 'beta2plot.png' \
+
