@@ -4,6 +4,7 @@ import argparse
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
+from scipy.optimize import fsolve
 
 
 def main():
@@ -22,7 +23,7 @@ def main():
                         type=float,
                         help='Gamma value',
                         required=True)  # Adds argument for gamma value.
-
+    
     parser.add_argument('--output_file',
                         type=str,
                         help='path for png or txt',
@@ -36,14 +37,15 @@ def main():
     I = data[1]
     R = data[2]
     time = data[3]
+    intersection = data[4]
 
     labels = ['S - Brenna', 'I - Brenna', 'R - Brenna']
     colors = ['blue', 'red', 'black']
-    
+
     fig, ax = plt.subplots()
     for i in range(3): # iterates through rante
         ax.plot(time, data[i], label=labels[i], color=colors[i]) # plots varying parameters
-        
+
     ax.set_title('SIR Model Simulation')
     ax.set_xlabel('Time')
     ax.set_ylabel('People')
@@ -51,9 +53,7 @@ def main():
     ax.legend()
     plt.tight_layout()
 
-
     plt.savefig(args.output_file)
-    
 
 if __name__ == '__main__':
     main()

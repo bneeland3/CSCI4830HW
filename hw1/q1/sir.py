@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 '''
 SIR model simulation: Forward Euler Method
 y_n = y_n-1 + delta_t*f(t_n,y_n)
+t_n = t_n-1 + delta_ts
 
 '''
 
@@ -37,10 +38,9 @@ def forward_euler_solver(beta, gamma):
         
         # updates current SIR values to the new step
         S, I, R = S_n, I_n, R_n
+    # solves for the intersection point for question 3
 
     # returns a list of lists
     return [suceptibles, infected, recovered, time]
 
 # print(forward_euler_solver(1.5, 0.5))
-
-    
