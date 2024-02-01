@@ -24,25 +24,39 @@ def main():
                         help='Gamma value',
                         required=True)  # Adds argument for gamma value.
     
+    parser.add_argument('--N',
+                    type=int,
+                    help='N value',
+                    required=True)  # Adds argument for gamma value.
+
+    
     parser.add_argument('--output_file',
                         type=str,
                         help='path for png or txt',
                         required=True)
+    
+    parser.add_argument('--r_infinity',
+                        type=bool,
+                        help='if you want to have r_infinity on the graph',
+                        required=True)
+    
 
     args = parser.parse_args()
     # Defines the command-line interface for the script
-    data = sir.forward_euler_solver(args.beta, args.gamma)
-    
+    data = sir.forward_euler_solver(args.beta, args.gamma, args.N)
+
     S = data[0]
     I = data[1]
     R = data[2]
     time = data[3]
-    intersection = data[4]
-
+    r_infinity = data[4]
+    
     labels = ['S - Brenna', 'I - Brenna', 'R - Brenna']
     colors = ['blue', 'red', 'black']
-
+        
     fig, ax = plt.subplots()
+    if args.r_infinity == True:
+        plt.axhline(y=r_infinity, color='green', linestyle='dotted',label=f'{r_infinity}')
     for i in range(3): # iterates through rante
         ax.plot(time, data[i], label=labels[i], color=colors[i]) # plots varying parameters
 
@@ -50,6 +64,7 @@ def main():
     ax.set_xlabel('Time')
     ax.set_ylabel('People')
     ax.set_xlim(left=0)
+    
     ax.legend()
     plt.tight_layout()
 
