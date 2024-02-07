@@ -39,10 +39,8 @@ def forward_euler_solver(beta, gamma, N):
         
         # updates current SIR values to the new step
         S, I, R = S_n, I_n, R_n
-    # solves for the intersection point for question 3
-    r_infinity = fsolve(lambda r: r -(1-np.exp(-R*r)),0.5)[0]
-    
+        
     # returns a list of lists
-    return [suceptibles, infected, recovered, time, r_infinity]
+    return [suceptibles, infected, recovered, time]
 
 # print(forward_euler_solver(1.5, 0.5))

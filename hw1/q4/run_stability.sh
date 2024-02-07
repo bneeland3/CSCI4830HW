@@ -10,6 +10,6 @@ python plot_stability.py \
     --stable_R 0.9 \
     --unstable_R 1.1 \
     --gamma 0.5 \
-    --N 1000000 \
+    --N 1000000.0 \
     --output_file 'stability.png' \
 

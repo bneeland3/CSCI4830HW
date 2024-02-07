@@ -1,5 +1,6 @@
 import sys
 import sir
+import numpy as np
 import argparse
 import matplotlib
 import matplotlib.pyplot as plt
@@ -49,14 +50,15 @@ def main():
     I = data[1]
     R = data[2]
     time = data[3]
-    r_infinity = data[4]
     
     labels = ['S - Brenna', 'I - Brenna', 'R - Brenna']
     colors = ['blue', 'red', 'black']
         
     fig, ax = plt.subplots()
     if args.r_infinity == True:
-        plt.axhline(y=r_infinity, color='green', linestyle='dotted',label=f'{r_infinity}')
+        R_0 = args.beta/args.gamma
+        r_infinity = fsolve(lambda r: r - (1-np.exp(-R_0*r)),0.5)[0]
+        plt.axhline(y=r_infinity, color='green', linestyle='dotted',label=f'r_infinity = {r_infinity}')
     for i in range(3): # iterates through rante
         ax.plot(time, data[i], label=labels[i], color=colors[i]) # plots varying parameters
 
