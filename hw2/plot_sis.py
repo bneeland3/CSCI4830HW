@@ -35,7 +35,7 @@ def main():
                         required=True)
     
     parser.add_argument('--delta_t',
-                        type=int,
+                        type=float,
                         help='stepsize for delta_t',
                         required=True)
     
@@ -57,7 +57,7 @@ def main():
     data = sis.forward_euler_solver(args.beta, args.gamma, args.s_0,
                                     args.i_0, args.delta_t, args.t_final)
 
-    S = data[0]
+    # S = data[0]
     I = data[1]
     time = data[2]
     

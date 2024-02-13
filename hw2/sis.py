@@ -26,9 +26,7 @@ def forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final):
     infected = [i]
     time = [t_initial]
     
-    
-    for t in range(t_initial, t_final, delta_t): # iterates through 0-25
-            # delta_t is to specify the stepsize
+    while t_initial < t_final:
         i_t = (beta - gamma)*i*(1-(i/(1-(1/R_0))))
         s_t = 1-i_t
         
@@ -37,10 +35,16 @@ def forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final):
         suceptibles.append(s_t)
         
         # updates time
-        time.append(time[-1] + delta_t)
+        t_initial += delta_t
+        time.append(t_initial)
         
         # updates current SIS values to the new step
         s, i = s_t, i_t
+        
+    # returns a list of lists
+    return [suceptibles, infected, time]
+
+        
         
     # returns a list of lists
     return [suceptibles, infected, time]
