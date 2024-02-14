@@ -49,9 +49,8 @@ def main():
                         help='name for file',
                         required=True)
 
-
-    args = parser.parse_args()
     # Defines the command-line interface for the script
+    args = parser.parse_args()
     
     # function call and data declaration
     data = sis.forward_euler_solver(args.beta, args.gamma, args.s_0,
@@ -60,7 +59,6 @@ def main():
     # S = data[0]
     I = data[1]
     time = data[2]
-    
     
     # plotting code block
     fig, ax = plt.subplots()

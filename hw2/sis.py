@@ -16,7 +16,7 @@ SIS with 3 plots t = 1, 0.5, 2
 
 def forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final):
     # below sets initial parameters
-    t_initial = 0
+    t = 0
     s = s_0
     i = i_0
     R_0 = (beta/gamma)
@@ -24,28 +24,30 @@ def forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final):
     # adds initial parameters to lists
     suceptibles = [s]
     infected = [i]
-    time = [t_initial]
+    time = [t]
     
-    while t_initial < t_final:
+    while t < t_final:
+        ## logistic ODE
         i_t = (beta - gamma)*i*(1-(i/(1-(1/R_0))))
-        s_t = 1-i_t
-        
+        ## closed form soln
+        # if np.isclose(i, 1):  # Check if i is close to 1 to avoid division by zero
+        #     i_t = 1
+        # else:
+        #     exponential_term = np.exp(-(beta - gamma) * t)
+        #     fraction_term = ((1 - (1 / R_0)) / (1 + (1 - (1 / R_0) - i_0) / (R_0 * i_0)))
+        #     i_t = 1 - fraction_term * i_0 * exponential_term
+
+        s_t = 1 - i_t
         # appends to lists
         infected.append(i_t)
         suceptibles.append(s_t)
         
         # updates time
-        t_initial += delta_t
-        time.append(t_initial)
+        t += delta_t
+        time.append(t)
         
         # updates current SIS values to the new step
         s, i = s_t, i_t
-        
+    print(infected)
     # returns a list of lists
     return [suceptibles, infected, time]
-
-        
-        
-    # returns a list of lists
-    return [suceptibles, infected, time]
-
