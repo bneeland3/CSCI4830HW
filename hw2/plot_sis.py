@@ -59,16 +59,18 @@ def main():
     # S = data[0]
     I = data[1]
     time = data[2]
-    
-    # plotting code block
+    analytical = data[3]
+
     fig, ax = plt.subplots()
-    ax.plot(time, I, color = 'red', label = 'Infected - Brenna')
-    ax.set_xlabel('Time')
-    ax.set_ylabel('I(t)')
-    ax.set_ylim(0, 0.5)
-    ax.set_title('SIS Model Simulation')
-    ax.legend()
-    plt.tight_layout()
+    # Plot infected population with solid line
+    ax.plot(time, I, color='red', label='Infected')
+    # Plot analytical solution with dashed line
+    ax.plot(time, analytical, color='black', label='Analytical', linestyle='--')
+    ax.set_xlabel('Time')  # Set x-axis label
+    ax.set_ylabel('Population')  # Set y-axis label to 'Population'
+    ax.set_title('SIS Model Simulation')  # Set plot title
+    ax.legend()  # Add legend
+    plt.tight_layout()  # Adjust layout
 
     # Save plot to file
     plt.savefig(args.output_file)
