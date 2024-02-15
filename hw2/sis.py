@@ -26,9 +26,11 @@ def forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final):
     infected = [i]
     time = [t]
     
+    ind = 1
+    
     while t < t_final:
         ## logistic ODE
-        i_t = (beta - gamma)*i*(1-(i/(1-(1/R_0))))
+        i_t = (beta - gamma)*infected[ind-1]*(1-(infected[ind-1]/(1-(1/R_0))))
         ## closed form soln
         # if np.isclose(i, 1):  # Check if i is close to 1 to avoid division by zero
         #     i_t = 1
@@ -37,17 +39,20 @@ def forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final):
         #     fraction_term = ((1 - (1 / R_0)) / (1 + (1 - (1 / R_0) - i_0) / (R_0 * i_0)))
         #     i_t = 1 - fraction_term * i_0 * exponential_term
 
-        s_t = 1 - i_t
         # appends to lists
-        infected.append(i_t)
-        suceptibles.append(s_t)
+        i_next = (i_t * delta_t) + infected[ind-1]
+        infected.append(i_next)
         
         # updates time
         t += delta_t
         time.append(t)
         
         # updates current SIS values to the new step
-        s, i = s_t, i_t
+        i =  i_t
+        
+        ind += 1
+        
+
     print(infected)
     # returns a list of lists
     return [suceptibles, infected, time]

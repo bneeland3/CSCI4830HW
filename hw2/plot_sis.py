@@ -63,8 +63,9 @@ def main():
     # plotting code block
     fig, ax = plt.subplots()
     ax.plot(time, I, color = 'red', label = 'Infected - Brenna')
-    ax.set_xlabel('Tiime')
-    ax.set_ylabel('Population')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('I(t)')
+    ax.set_ylim(0, 0.5)
     ax.set_title('SIS Model Simulation')
     ax.legend()
     plt.tight_layout()
