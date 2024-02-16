@@ -33,4 +33,5 @@ python plot_sis.py \
     --delta_t 0.5 \
     --t_final 25 \
     --output_file delt_t0.5.png \
+    --E_delta_t True \
 
