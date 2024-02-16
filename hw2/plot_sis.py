@@ -48,11 +48,6 @@ def main():
                         type=str,
                         help='name for file',
                         required=True)
-    
-    parser.add_argument('--E_delta_t',
-                        type=bool,
-                        help='returns absolute error',
-                        required=False)
 
     # Defines the command-line interface for the script
     args = parser.parse_args()
@@ -65,20 +60,12 @@ def main():
     I = data[1]
     time = data[2]
     analytical = data[3]
-    
+
     fig, ax = plt.subplots()
     # Plot infected population with solid line
     ax.plot(time, I, color='red', label='Infected')
     # Plot analytical solution with dashed line
     ax.plot(time, analytical, color='black', label='Analytical', linestyle='--')
-    
-    if args.E_delta_t:
-        absolute_error = sis.get_E_delta_t(args.beta, args.gamma, args.s_0,
-                                            args.i_0, args.delta_t, args.t_final)
-        print(absolute_error)
-        ax.plot(time, absolute_error, color='')
-    
-    
     ax.set_xlabel('Time')  # Set x-axis label
     ax.set_ylabel('Population')  # Set y-axis label to 'Population'
     ax.set_title('SIS Model Simulation')  # Set plot title
