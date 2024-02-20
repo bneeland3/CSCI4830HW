@@ -50,7 +50,7 @@ def forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final):
     # print(analytical)
     
     # returns a list of lists
-    print(analytical)
+    # print(analytical)
     return [suceptibles, infected, time, analytical]
 
 def get_E_delta_t(beta, gamma, s_0, i_0, delta_t, t_final):
