@@ -50,17 +50,17 @@ def forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final):
     # print(analytical)
     
     # returns a list of lists
+    print(analytical)
     return [suceptibles, infected, time, analytical]
 
 def get_E_delta_t(beta, gamma, s_0, i_0, delta_t, t_final):
     '''
     Function calcualtes E(delta_t)
-    params: foware euler params
+    params: foward euler params
     '''
-    data = forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final)
-    euler_soln = np.array(data[1])
-    analytical_soln = np.array(data[3])
+    numerical_solution = np.array(forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final)[1])
+    analytical_solution = np.array(forward_euler_solver(beta, gamma, s_0, i_0, delta_t, t_final)[3])
     
-    E_delta_t = t_final * (np.abs(euler_soln - analytical_soln))
+    E_delta_t = np.max(np.abs(numerical_solution - analytical_solution))
     
-    return E_delta_t
+    return float(E_delta_t)

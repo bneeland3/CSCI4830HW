@@ -1,4 +1,3 @@
-import sys
 import sis
 import numpy as np
 import argparse
@@ -73,12 +72,9 @@ def main():
     ax.plot(time, analytical, color='black', label='Analytical', linestyle='--')
     
     if args.E_delta_t:
-        absolute_error = sis.get_E_delta_t(args.beta, args.gamma, args.s_0,
-                                            args.i_0, args.delta_t, args.t_final)
-        print(absolute_error)
-        ax.plot(time, absolute_error, color='')
-    
-    
+        absolute_error = sis.get_E_delta_t(args.beta, args.gamma, args.s_0, args.i_0, args.delta_t, args.t_final)
+        print(round(absolute_error,6))
+
     ax.set_xlabel('Time')  # Set x-axis label
     ax.set_ylabel('Population')  # Set y-axis label to 'Population'
     ax.set_title('SIS Model Simulation')  # Set plot title
