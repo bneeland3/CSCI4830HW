@@ -2,7 +2,11 @@ import sys
 import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
+<<<<<<< HEAD
 # from scipy.optimize import fsolve
+=======
+from scipy.optimize import fsolve
+>>>>>>> a0de46fc7631987a853c9a2cb5d0e66429b41c1e
 
 '''
 SIR model simulation: Forward Euler Method

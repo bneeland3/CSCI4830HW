@@ -5,7 +5,11 @@ import argparse
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
+<<<<<<< HEAD
 # from scipy.optimize import fsolve
+=======
+from scipy.optimize import fsolve
+>>>>>>> a0de46fc7631987a853c9a2cb5d0e66429b41c1e
 
 
 def main():
@@ -30,6 +34,10 @@ def main():
                     help='N value',
                     required=True)  # Adds argument for gamma value.
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> a0de46fc7631987a853c9a2cb5d0e66429b41c1e
     parser.add_argument('--output_file',
                         type=str,
                         help='path for png or txt',
@@ -58,7 +66,11 @@ def main():
         R_0 = args.beta/args.gamma
         r_infinity = fsolve(lambda r: r - (1-np.exp(-R_0*r)),0.5)[0]
         plt.axhline(y=r_infinity, color='green', linestyle='dotted',label=f'r_infinity = {r_infinity}')
+<<<<<<< HEAD
     for i in range(3): # iterates through range
+=======
+    for i in range(3): # iterates through rante
+>>>>>>> a0de46fc7631987a853c9a2cb5d0e66429b41c1e
         ax.plot(time, data[i], label=labels[i], color=colors[i]) # plots varying parameters
 
     ax.set_title('SIR Model Simulation')
