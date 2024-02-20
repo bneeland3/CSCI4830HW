@@ -52,18 +52,23 @@ def main():
                         type=bool,
                         help='returns absolute error',
                         required=False)
+    
+    parser.add_argument('--graph_E',
+                        type=bool,
+                        help='returns absolute error',
+                        required=False)
 
     # Defines the command-line interface for the script
     args = parser.parse_args()
 
     if args.E_delta_t:
-        # Run simulation for different step sizes to calculate E(delta_t)
-        delta_ts = [2, 1, 0.5, 0.25, 0.125, 0.0625, 0.03125]
-        errors = []
-
         half_dt = sis.get_E_delta_t(args.beta,args.gamma,args.s_0,args.i_0,0.5,args.t_final)
         print(round(half_dt,6))
         
+    if args.graph_E:
+        # Run simulation for different step sizes to calculate E(delta_t)
+        delta_ts = [2, 1, 0.5, 0.25, 0.125, 0.0625, 0.03125]
+        errors = []
         for delta_t in delta_ts:
             error = sis.get_E_delta_t(args.beta, args.gamma, args.s_0,
                                     args.i_0, delta_t, args.t_final)
