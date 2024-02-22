@@ -4,14 +4,10 @@ import matplotlib.pyplot as plt
 from mod_sir import forward_euler_solver_lm, forward_euler_solver_anm
 
 def main():
-    # The argparse library allows us to take command-line arguments
-
     parser = argparse.ArgumentParser(
         description='Passing parameters to the SIR simulation using Forward Euler',
         prog='print SIR simulation')
 
-    # argparse arguments for bash script
-    
     parser.add_argument('--R_0',
                         type=float,
                         help='Basic reproduction num',
@@ -32,22 +28,33 @@ def main():
                         help='Name for file',
                         required=True)
 
-    # Defines the command-line interface for the script
     args = parser.parse_args()
     
-    # Function call and data declaration
     lm_data = forward_euler_solver_lm(args.R_0, args.N, args.VE)
     anm_data = forward_euler_solver_anm(args.R_0, args.N, args.VE)
-    print(f'cumulative infectious for lm : {round(lm_data[5],0)}')
-    print(f'cumulative infectious for anm : {round(anm_data[6],0)}')
+    lm_cumulative_infectious = round(lm_data[5],0)
+    anm_cumulative_infectious = round(anm_data[6],0)
+    print(f'cumulative infectious for lm : {lm_cumulative_infectious}')
+    print(f'cumulative infectious for anm : {anm_cumulative_infectious}')
+    with open('data.txt', 'a') as f:
+        f.write(f'{lm_cumulative_infectious}, {anm_cumulative_infectious}\n')
     
-    fig, ax = plt.subplots()
-    ax.plot(lm_data[0], lm_data[2], color='red', label='Infected-LM')
-    ax.plot(anm_data[0], anm_data[2], color='blue', label='Infected-ANM')
-    ax.set_xlabel('Time')
-    ax.set_ylabel('Infected Population')
-    ax.set_title(f'Infected Population in SIR Model Simulation of {args.R_0}')
-    ax.legend()
+    # Plotting
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+
+    # Original Plots
+    ax1.plot(lm_data[0], lm_data[2], color='red', label='Infected-LM')
+    ax1.plot(anm_data[0], anm_data[2], color='blue', label='Infected-ANM')
+    ax1.set_xlabel('Time')
+    ax1.set_ylabel('Infected Population')
+    ax1.set_title(f'Infected Population in SIR Model Simulation of {args.R_0}')
+    ax1.legend()
+
+    # New Plots
+    ax2.bar(['LM', 'ANM'], [lm_cumulative_infectious, anm_cumulative_infectious], color=['red', 'blue'])
+    ax2.set_ylabel('Cumulative Infectious Population')
+    ax2.set_title('Cumulative Infectious Population')
+    
     plt.tight_layout()
 
     # Save plot to file
