@@ -38,7 +38,8 @@ def main():
     # Function call and data declaration
     lm_data = forward_euler_solver_lm(args.R_0, args.N, args.VE)
     anm_data = forward_euler_solver_anm(args.R_0, args.N, args.VE)
-
+    print(f'cumulative infectious for lm : {round(lm_data[5],0)}')
+    print(f'cumulative infectious for anm : {round(anm_data[6],0)}')
     
     fig, ax = plt.subplots()
     ax.plot(lm_data[0], lm_data[2], color='red', label='Infected-LM')
