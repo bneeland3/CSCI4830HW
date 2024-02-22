@@ -1,7 +1,7 @@
 import numpy as np
 import argparse
 import matplotlib.pyplot as plt
-import mod_sir
+from mod_sir import forward_euler_solver_lm, forward_euler_solver_anm
 
 def main():
     # The argparse library allows us to take command-line arguments
@@ -11,25 +11,21 @@ def main():
         prog='print SIR simulation')
 
     # argparse arguments for bash script
-    parser.add_argument('--beta',
-                        type=float,
-                        help='Beta value',
-                        required=True)  # Adds argument for beta value.
-
-    parser.add_argument('--gamma',
-                        type=float,
-                        help='Gamma value',
-                        required=True)  # Adds argument for gamma value.
     
-    parser.add_argument('--N',
-                        type=int,
-                        help='Population size',
-                        required=True)
-
     parser.add_argument('--R_0',
                         type=float,
-                        help='Basic reproduction number',
-                        required=False)
+                        help='Basic reproduction num',
+                        required=True)
+
+    parser.add_argument('--N',
+                        type=int,
+                        help='population size',
+                        required=True)
+    
+    parser.add_argument('--VE',
+                        type=float,
+                        help='vaccine efficacy',
+                        required=True)
 
     parser.add_argument('--output_file',
                         type=str,
@@ -40,21 +36,21 @@ def main():
     args = parser.parse_args()
     
     # Function call and data declaration
-    time, susceptibles, infected, recovered = mod_sir.forward_euler_solver(args.beta, args.gamma, args.N, args.R_0)
+    lm_data = forward_euler_solver_lm(args.R_0, args.N, args.VE)
+    anm_data = forward_euler_solver_anm(args.R_0, args.N, args.VE)
 
-    # Plotting
-    plt.plot(time, susceptibles, color='blue', label='Susceptible')
-    plt.plot(time, infected, color='red', label='Infected')
-    plt.plot(time, recovered, color='green', label='Recovered')
-    plt.xlabel('Time')
-    plt.ylabel('Population')
-    plt.title('SIR Model Simulation (Forward Euler)')
-    plt.legend()
-    plt.grid(True)
+    
+    fig, ax = plt.subplots()
+    ax.plot(lm_data[0], lm_data[2], color='red', label='Infected-LM')
+    ax.plot(anm_data[0], anm_data[2], color='blue', label='Infected-ANM')
+    ax.set_xlabel('Time')
+    ax.set_ylabel('Infected Population')
+    ax.set_title(f'Infected Population in SIR Model Simulation of {args.R_0}')
+    ax.legend()
     plt.tight_layout()
 
     # Save plot to file
-    plt.savefig(args.output_file)
+    fig.savefig(args.output_file)
 
 if __name__ == '__main__':
     main()
