@@ -34,13 +34,11 @@ def main():
     anm_data = forward_euler_solver_anm(args.R_0, args.N, args.VE)
     lm_cumulative_infectious = round(lm_data[5],0)
     anm_cumulative_infectious = round(anm_data[6],0)
-    print(f'cumulative infectious for lm : {lm_cumulative_infectious}')
-    print(f'cumulative infectious for anm : {anm_cumulative_infectious}')
-    with open('data.txt', 'a') as f:
-        f.write(f'{lm_cumulative_infectious}, {anm_cumulative_infectious}\n')
+    # print(f'cumulative infectious for lm : {lm_cumulative_infectious}')
+    # print(f'cumulative infectious for anm : {anm_cumulative_infectious}')
     
     # Plotting
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(10, 5))
 
     # Original Plots
     ax1.plot(lm_data[0], lm_data[2], color='red', label='Infected-LM')
