@@ -46,8 +46,10 @@ def forward_euler_solver_lm(R_0, N, vaccine_efficiency):
         
         # Update values for next iteration
         S, I, R, V = S_n, I_n, R_n, V_n
-        
-    return time, susceptibles, infected, recovered, vaccinated
+    
+    total_infections = np.sum(infected)
+    
+    return time, susceptibles, infected, recovered, vaccinated, total_infections
 
 
 def forward_euler_solver_anm(R_0, N, vaccine_coverage):
@@ -99,7 +101,7 @@ def forward_euler_solver_anm(R_0, N, vaccine_coverage):
         vaccinated_null.append(V_null)
         vaccinated_all.append(V_all)
         time.append(t + delta_t)  # Use current time t for consistency
-        
-    return time, susceptibles, infected, recovered, vaccinated_null, vaccinated_all
-
-
+    
+    total_infections = np.sum(infected)
+    
+    return time, susceptibles, infected, recovered, vaccinated_null, vaccinated_all, total_infections
