@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 def forward_euler_solver_lm(R_0, N, vaccine_efficiency):
     # Fixed duration for infectious period
@@ -105,3 +106,4 @@ def forward_euler_solver_anm(R_0, N, vaccine_coverage):
     total_infections = np.sum(infected)
     
     return time, susceptibles, infected, recovered, vaccinated_null, vaccinated_all, total_infections
+
