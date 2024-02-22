@@ -3,10 +3,24 @@ set -e # -e stops on error.
 set -u # -u raises error.
 set -o pipefail # Fails if a prior step has failed.
 
-echo '...running plot_sir.py under vaccination models...'
+echo '...running plot_sir.py with R_0 = 5...'
 python plot_sir.py \
-    --beta 3.0 \
-    --gamma 2.0 \
+    --R_0 5.0 \
     --N 300000 \
+    --VE 0.8 \
+    --output_file r05.png \
+
+echo '...running plot_sir.py with R_0 = 4..'
+python plot_sir.py \
+    --R_0 4.0 \
+    --N 300000 \
+    --VE 0.8 \
+    --output_file r04.png \
+
+echo '...running plot_sir.py with R_0 = 3...'
+python plot_sir.py \
     --R_0 3.0 \
-    --output_file sir_simulation.png
+    --N 300000 \
+    --VE 0.8 \
+    --output_file r03.png \
+
