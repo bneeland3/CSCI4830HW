@@ -24,3 +24,17 @@ python plot_sir.py \
     --VE 0.8 \
     --output_file r03.png \
 
+# Testing framework
+echo '...running plot_sir.py with VE = 0...'
+python plot_sir.py \
+    --R_0 4.0 \
+    --N 300000 \
+    --VE 0.0 \
+    --output_file ve0.png \
+
+echo '...running plot_sir.py with VE = 1...'
+python plot_sir.py \
+    --R_0 4.0 \
+    --N 300000 \
+    --VE 1.0 \
+    --output_file ve1.png \
