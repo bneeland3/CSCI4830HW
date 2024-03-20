@@ -1,0 +1,7 @@
+Probability of epidemic dying out in finite time:
+R0	k	Probability
+3	0.1	0.899
+3	0.5	0.479
+3	1.0	0.299
+3	5.0	0.103
+3	10.0	0.078
