@@ -1,5 +1,5 @@
 import argparse
-import seaborn as sns
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
@@ -35,14 +35,24 @@ def main():
     
     # Read CSV files
     files = [args.pos_data, args.neg_data, args.field_data]
-    all_data = read_csvs(files)
+    data = read_csvs(files)
+    
+    fig, ax = plt.subplots()
+    # negative controls
+    ax.scatter(np.random.normal(1, 0.05, len(data[1])), data[1], color='red', alpha=0.5, label='Negative Controls')
+    # positive controls with black color
+    ax.scatter(np.random.normal(2, 0.05, len(data[0])), data[0], color='black', alpha=0.5, label='Positive Controls')
+    # field data with blue color
+    ax.scatter(np.random.normal(3, 0.05, len(data[2])), data[2], color='blue', alpha=0.5, label='Field Data')
 
-    custom_palette = {0: 'black', 1: 'red', 2: 'blue'}  
-    sns.scatterplot(data=all_data,palette=custom_palette)
-    plt.xlabel('Samples')
-    plt.ylabel('ODs')
-    plt.title('ELISA Scatter Plot')
+    # Add legend
+    ax.legend()
+    # ax.set_xlabel('Samples')
+    ax.set_ylabel('ODs')
+    ax.set_title('ELISA Data')
+    ax.set_xticks([1, 2, 3])
+    ax.set_xticklabels(['Negative Controls', 'Positive Controls', 'Field Data'])
     plt.savefig(args.output_file)
-
+    
 if __name__ == '__main__':
     main()
