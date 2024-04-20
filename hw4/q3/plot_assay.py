@@ -37,11 +37,11 @@ def main():
     files = [args.pos_data, args.neg_data, args.field_data]
     data = read_csvs(files)
     
-    fig, ax = plt.subplots(figsize=(10, 8))  
-    # negative controls
-    ax.scatter(np.random.normal(1, 0.05, len(data[1])), data[1], color='red', alpha=0.5, label='Negative Controls')
+    fig, ax = plt.subplots(figsize=(10, 8))
     # positive controls
-    ax.scatter(np.random.normal(2, 0.05, len(data[0])), data[0], color='black', alpha=0.5, label='Positive Controls')
+    ax.scatter(np.random.normal(1, 0.05, len(data[0])), data[0], color='black', alpha=0.5, label='Positive Controls')
+    # negative controls
+    ax.scatter(np.random.normal(2, 0.05, len(data[1])), data[1], color='red', alpha=0.5, label='Negative Controls')
     # field data 
     ax.scatter(np.random.normal(3, 0.05, len(data[2])), data[2], color='blue', alpha=0.5, label='Field Data')
 
@@ -51,7 +51,7 @@ def main():
     ax.set_ylabel('ODs')
     ax.set_title('ELISA Data')
     ax.set_xticks([1, 2, 3])
-    ax.set_xticklabels(['Negative Controls', 'Positive Controls', 'Field Data'])
+    ax.set_xticklabels(['Positive Controls', 'Negative Controls', 'Field Data'])
     plt.savefig(args.output_file)
     
 if __name__ == '__main__':
