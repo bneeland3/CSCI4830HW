@@ -37,12 +37,12 @@ def main():
     files = [args.pos_data, args.neg_data, args.field_data]
     data = read_csvs(files)
     
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(10, 8))  
     # negative controls
     ax.scatter(np.random.normal(1, 0.05, len(data[1])), data[1], color='red', alpha=0.5, label='Negative Controls')
-    # positive controls with black color
+    # positive controls
     ax.scatter(np.random.normal(2, 0.05, len(data[0])), data[0], color='black', alpha=0.5, label='Positive Controls')
-    # field data with blue color
+    # field data 
     ax.scatter(np.random.normal(3, 0.05, len(data[2])), data[2], color='blue', alpha=0.5, label='Field Data')
 
     # Add legend
