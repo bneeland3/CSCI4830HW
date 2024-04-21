@@ -16,3 +16,6 @@ def read_csvs(files):
                 elif file == files[2]:
                     field_data.append(float(row[0]))  # Assuming first column contains field data
     return neg_data, pos_data, field_data
+
+def find_c():
+    return None
