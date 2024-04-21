@@ -1,11 +1,18 @@
 import pandas as pd
 import numpy as np
-from scipy.optimize import curve_fit
+from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
 # Step 1: Load the data from all_weeks.csv
 data = pd.read_csv('all_weeks.csv')  # Adjust the filename to match your CSV file
-weekly_new_cases = data['New Cases'].tolist()  # Update column name if necessary
+
+# Adjust for the ascertainment rate by increasing reported cases
+data['Adjusted_New_Cases'] = data['New Cases'] * 10 # Multiply by 10 for the ascertainment rate
+
+# Ensure adjusted incidence data does not contain zero or negative values
+data['Adjusted_New_Cases'] = np.maximum(data['Adjusted_New_Cases'], 1)  # Set minimum value to 1
+
+weekly_new_cases = data['Adjusted_New_Cases'].tolist()  # Use adjusted new case counts
 
 # Step 2: Calculate the weekly incidence data
 x = np.arange(len(weekly_new_cases))
@@ -14,34 +21,31 @@ x = np.arange(len(weekly_new_cases))
 # For simplicity, let's assume the first few weeks represent the exponential growth phase
 # You might need to adjust this based on the data
 start_week = 0
-end_week = 5  # Adjust as needed
+end_week = len(weekly_new_cases)  # Use all weeks from the dataset
 
-# Step 4: Fit an exponential curve to this period and estimate the slope
-def exponential_func(x, a, b):
-    return a * np.exp(b * x)
-
+# Subset the data for the exponential growth phase
 x_subset = x[start_week:end_week]
-y_subset = weekly_new_cases[start_week:end_week]
+y_subset = np.log(weekly_new_cases[start_week:end_week])  # Logarithm of adjusted incidence data
 
-popt, pcov = curve_fit(exponential_func, x_subset, y_subset)
-slope = popt[1]
+# Step 4: Fit a linear regression model to estimate the slope (m)
+X = x_subset.reshape(-1, 1)  # Reshape X for linear regression
+reg = LinearRegression().fit(X, y_subset)
+slope = reg.coef_[0]
 
 # Step 5: Estimate R0
-gamma = 2  # duration of infection
-mu = 100   # typical life expectancy
+gamma = 1/2  # duration of infection
+mu = 1/100   # typical life expectancy
 R0 = 1 + (slope / (gamma + mu))
 
-# Step 6: Plot the exponential growth curve and show the estimate of R0
-plt.plot(x, weekly_new_cases, 'o', label='Weekly New Cases')
-plt.plot(x_subset, exponential_func(x_subset, *popt), 'r-', label='Exponential Fit')
+# Step 6: Plot the scatterplot of weekly new cases and overlay the exponential fit
+plt.scatter(x_subset, y_subset, label='log(Weekly New Cases)', color='blue')  # Plot log(weekly_new_cases) directly
+plt.plot(x_subset, reg.predict(X), 'r-', label='Linear Fit')
 plt.xlabel('Week')
-plt.ylabel('Number of New Cases')
+plt.ylabel('Log of Number of New Cases')
 plt.title('Exponential Growth of Cases')
 plt.legend()
 plt.grid(True)
 plt.savefig('exp.png')
 
 # Print the values
-print("Optimal Parameters (popt):", popt)
-print("Covariance Matrix (pcov):", pcov)
 print("Estimated R0:", R0)
