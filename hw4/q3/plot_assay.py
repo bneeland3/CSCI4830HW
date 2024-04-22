@@ -29,7 +29,7 @@ def main():
     parser.add_argument('--cutoff',
                         type=int,
                         help='cutoff value for assay data',
-                        required=False) 
+                        required=False) ##cutoff parameter, change in bash script
     
     parser.add_argument('--output_file',
                         type=str,
