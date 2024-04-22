@@ -46,7 +46,7 @@ def main():
         specificity = get_sp(args.cutoff, data[0])
         sensitivity = get_se(args.cutoff, data[1])
         phi_hat = get_phi_hat(args.cutoff, data[2])
-        theta = get_theta_hat(args.cutoff, sensitivity, specificity, phi_hat)
+        theta = get_theta_hat(sensitivity, specificity, phi_hat)
         print(f'Theta: {theta}')
         
     fig, ax = plt.subplots(figsize=(10, 8))

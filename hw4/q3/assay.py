@@ -54,7 +54,7 @@ def get_phi_hat(c, field_data):
     phi_hat = n_pos / n
     return phi_hat
 
-def get_theta_hat(c, se, sp, phi_hat):
+def get_theta_hat(se, sp, phi_hat):
     # Corrected prevalence in the field data for a given cutoff c
     theta_hat = (phi_hat - (1 - sp))/(se + sp -1)
     return theta_hat
