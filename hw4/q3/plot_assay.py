@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
-from assay import read_csvs, get_se, get_sp, get_theta_hat, get_phi_hat
+from assay import read_csvs, get_se, get_sp, get_theta_hat, get_phi_hat, get_youden_j_c
 
 def main():
     # The argparse library allows us to take command-line arguments
@@ -47,7 +47,9 @@ def main():
         sensitivity = get_se(args.cutoff, data[1])
         phi_hat = get_phi_hat(args.cutoff, data[2])
         theta = get_theta_hat(sensitivity, specificity, phi_hat)
+        j_c = get_youden_j_c(sensitivity, specificity)
         print(f'Theta: {theta}')
+        print(f'Youden J(c): {j_c}')
         
     fig, ax = plt.subplots(figsize=(10, 8))
     # positive controls
