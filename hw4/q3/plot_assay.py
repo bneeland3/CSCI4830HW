@@ -27,7 +27,7 @@ def main():
                         required=True) 
         
     parser.add_argument('--cutoff',
-                        type=int,
+                        type=float,
                         help='cutoff value for assay data',
                         required=False) ##cutoff parameter, change in bash script
     
@@ -46,8 +46,8 @@ def main():
         specificity = get_sp(args.cutoff, data[0])
         sensitivity = get_se(args.cutoff, data[1])
         phi_hat = get_phi_hat(args.cutoff, data[2])
-        theta = get_theta_hat(sensitivity, specificity, phi_hat)
         j_c = get_youden_j_c(sensitivity, specificity)
+        theta = get_theta_hat(sensitivity, specificity, phi_hat)
         print(f'Theta: {theta}')
         print(f'Youden J(c): {j_c}')
         
