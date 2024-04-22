@@ -17,7 +17,7 @@ def read_csvs(files):
                     field_data.append(float(row[0]))  # Assuming first column contains field data
     return neg_data, pos_data, field_data
 
-def sp(c, neg_data):
+def get_sp(c, neg_data):
     ##specificy (sp) = TN/TN + FP
     t_neg = 0
     f_pos = 0
@@ -30,7 +30,7 @@ def sp(c, neg_data):
     return sp
 
 
-def se(c, pos_data):
+def get_se(c, pos_data):
      ##sensitivity (se) = TP/TP+FN
     t_pos = 0
     f_neg = 0
@@ -42,9 +42,13 @@ def se(c, pos_data):
     se = t_pos/(t_pos + f_neg)
     return se
 
-def phi_hat(n_pos,n):
-    return float(n_pos/n)
+def get_phi_hat(c, field_data):
+    # Raw prevalence in the field data for a given cutoff c
+    total_samples = len(field_data)
+    positive_samples = sum(x >= c for x in field_data)
+    return positive_samples / total_samples
 
-def theta_hat(phi_hat, sp, se):
-    theta_hat = (phi_hat - (1 - sp))/(se + sp - 1)
+def get_theta_hat(c, se, sp, phi_hat):
+    # Corrected prevalence in the field data for a given cutoff c
+    theta_hat = (phi_hat - (1 - sp))/(se + sp -1)
     return theta_hat

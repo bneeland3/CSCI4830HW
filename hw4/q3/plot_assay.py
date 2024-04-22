@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
-from assay import read_csvs, se, sp, theta_hat, phi_hat
+from assay import read_csvs, get_se, get_sp, get_theta_hat, get_phi_hat
 
 def main():
     # The argparse library allows us to take command-line arguments
@@ -43,8 +43,11 @@ def main():
     data = read_csvs(files)
     
     if args.cutoff:
-        specificity = sp(args.cutoff, data[0])
-        sensitivity = se(args.cutoff, data[1])
+        specificity = get_sp(args.cutoff, data[0])
+        sensitivity = get_se(args.cutoff, data[1])
+        phi_hat = get_phi_hat(args.cutoff, data[2])
+        theta = get_theta_hat(args.cutoff, sensitivity, specificity, phi_hat)
+        print(f'Theta: {theta}')
         
     fig, ax = plt.subplots(figsize=(10, 8))
     # positive controls
