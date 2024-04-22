@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
-from assay import read_csvs 
+from assay import read_csvs, se, sp, theta_hat, phi_hat
 
 def main():
     # The argparse library allows us to take command-line arguments
@@ -25,6 +25,11 @@ def main():
                         type=str,
                         help='CSV field data file name',
                         required=True) 
+        
+    parser.add_argument('--cutoff',
+                        type=int,
+                        help='cutoff value for assay data',
+                        required=False) 
     
     parser.add_argument('--output_file',
                         type=str,
@@ -37,6 +42,10 @@ def main():
     files = [args.pos_data, args.neg_data, args.field_data]
     data = read_csvs(files)
     
+    if args.cutoff:
+        specificity = sp(args.cutoff, data[0])
+        sensitivity = se(args.cutoff, data[1])
+        
     fig, ax = plt.subplots(figsize=(10, 8))
     # positive controls
     ax.scatter(np.random.normal(1, 0.05, len(data[0])), data[0], color='black', alpha=0.5, label='Positive Controls')
