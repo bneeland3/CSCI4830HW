@@ -44,9 +44,15 @@ def get_se(c, pos_data):
 
 def get_phi_hat(c, field_data):
     # Raw prevalence in the field data for a given cutoff c
-    total_samples = len(field_data)
-    positive_samples = sum(x >= c for x in field_data)
-    return positive_samples / total_samples
+    n_pos = 0
+    n = len(field_data)
+    for data in field_data:
+        if data > c:
+            n_pos += 1
+        else:
+            continue
+    phi_hat = n_pos / n
+    return phi_hat
 
 def get_theta_hat(c, se, sp, phi_hat):
     # Corrected prevalence in the field data for a given cutoff c
