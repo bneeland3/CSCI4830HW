@@ -54,10 +54,21 @@ def get_phi_hat(c, field_data):
     phi_hat = n_pos / n
     return phi_hat
 
+# def get_theta_hat(se, sp, phi_hat):
+#     # Corrected prevalence in the field data for a given cutoff c
+#     if (se + sp - 1) == 0:
+#         return None
+#     else:
+#         theta_hat = (phi_hat - (1 - sp))/(se + sp -1)
+#         return theta_hat
 def get_theta_hat(se, sp, phi_hat):
     # Corrected prevalence in the field data for a given cutoff c
-    theta_hat = (phi_hat - (1 - sp))/(se + sp -1)
-    return theta_hat
+    if (se + sp - 1) == 0:
+        return None
+    else:
+        theta_hat = max(0, (phi_hat - (1 - sp)) / (se + sp - 1))
+        return theta_hat
+
 
 def get_youden_j_c(se_c, sp_c):
     J_c = se_c + sp_c - 1
