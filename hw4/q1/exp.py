@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 data = pd.read_csv('all_weeks.csv')  # Adjust the filename to match your CSV file
 
 # Adjust for the ascertainment rate by increasing reported cases
-data['Adjusted_New_Cases'] = data['New Cases'] * 10  # Multiply by 10 for the ascertainment rate
+data['Adjusted_New_Cases'] = data['New Cases'] # Multiply by 10 for the ascertainment rate
 
 # Ensure adjusted incidence data does not contain zero or negative values
 data['Adjusted_New_Cases'] = np.maximum(data['Adjusted_New_Cases'], 1)  # Set minimum value to 1
