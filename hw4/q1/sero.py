@@ -22,7 +22,8 @@ estimated_R0 = estimate_R0_from_seroprevalence(seroprevalence)
 
 # Calculate confidence interval for R0
 confidence_interval = calculate_confidence_interval(estimated_R0, seroprevalence, sample_size)
-
+print(f'R_0 {estimated_R0}')
+print(f'Confidence Interval: {confidence_interval}')
 # Plot
 plt.figure(figsize=(8, 6))
 plt.bar(x="Estimated R0", height=estimated_R0, yerr=[[estimated_R0 - confidence_interval[0]], [confidence_interval[1] - estimated_R0]], capsize=10, color='skyblue')
