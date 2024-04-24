@@ -68,6 +68,9 @@ def main():
         num_points = 50  # Adjust the number of points as needed for smoother curve
         c_values = np.linspace(min_c, max_c, num_points)
         
+        # Normalize cutoff values to the range [0, 1]
+        norm_c_values = (c_values - min_c) / (max_c - min_c)
+        
         # Initialize lists to store sensitivity, specificity, corrected prevalence, and Youden index for each cutoff value
         sensitivity_values = []
         specificity_values = []
@@ -92,31 +95,18 @@ def main():
         # Plot the Receiver Operating Characteristic (ROC) curve and the cutoff values
         plt.figure(figsize=(10, 6))
         # Plot J(c)
-        plt.plot(1 - np.array(specificity_values), sensitivity_values, label='ROC Curve')
+        plt.plot(norm_c_values, theta_values, label='Theta Hat Variation')
         # Find the index corresponding to the maximum Youden index
         max_youden_index = np.argmax(youden_values)
         # Plot the Youden choice point
-        plt.scatter(1 - specificity_values[max_youden_index], sensitivity_values[max_youden_index], color='red', label='Youden Choice')
-        # Plot cutoff values
-        #plt.plot(np.linspace(0, 1, 100), np.linspace(0, 1, 100), label='Cutoff Values')
-
-        plt.xlabel('False Positive Rate (1 - Specificity)')
-        plt.ylabel('True Positive Rate (Sensitivity)')
-        plt.title('ROC Curve and Cutoff Values')
-        plt.legend()
-        plt.savefig(args.output_file_roc)
-        
-        # Plot ˆθ(c) variation
-        plt.figure(figsize=(10, 6))
-        # Plot ˆθ(c)
-        plt.plot(c_values, theta_values, label='Theta Hat Variation')
-        # Plot the Youden choice point
-        plt.scatter(c_values[max_youden_index], theta_values[max_youden_index], color='red', label='Youden Choice')
+        plt.scatter(norm_c_values[max_youden_index], theta_values[max_youden_index], color='red', label='Youden Choice')
     
-        plt.xlabel('Cutoff Values')
+        plt.xlabel('Normalized Cutoff Values')
         plt.ylabel('Theta Hat')
-        plt.title('Theta Hat Variation with Cutoff Values')
+        plt.title('Theta Hat Variation with Normalized Cutoff Values')
         plt.legend()
+        plt.ylim(0, 1)  # Set y-axis limits from 0 to 1
+        plt.xlim(0, 1)  # Set x-axis limits from 0 to 1
         plt.savefig(args.output_file_theta)
 
     # Plotting function for just ELISA data!  
